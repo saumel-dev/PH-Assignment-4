@@ -1,4 +1,14 @@
 let currentStatus = 'all';
+const totalJob = document.querySelector('.allCards');
+let totalCount = document.getElementById('total');
+let invterviewCount = document.getElementById('interview');
+let rejectedCount = document.getElementById('rejected');
+const mainContainer = document.querySelector('main');
+const filterSection = document.getElementById('filtered-section');
+let interviewList = [];
+let rejectedList = [];
+const total_job = document.getElementById('total_job');
+
 function selectedBtn(id) {
     currentStatus = id;
     const allButtons = document.querySelectorAll('.btns button');
@@ -30,19 +40,18 @@ function selectedBtn(id) {
     }
     else if (currentStatus == 'rejected-btn') renderRejected();
 }
-
-const totalJob = document.querySelector('.allCards');
-let totalCount = document.getElementById('total');
-let invterviewCount = document.getElementById('interview');
-let rejectedCount = document.getElementById('rejected');
-const mainContainer = document.querySelector('main');
-const filterSection = document.getElementById('filtered-section');
-let interviewList = [];
-let rejectedList = [];
 function calculateCount() {
     totalCount.innerText = totalJob.children.length;
     invterviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
+
+    if (currentStatus == 'interview-btn') {
+        total_job.innerText = `${interviewList.length} of ${totalCount.innerText} jobs`;
+    }
+    else if (currentStatus == 'rejected-btn') {
+        total_job.innerText = `${rejectedList.length} of ${totalCount.innerText} jobs`;
+    }
+    else total_job.innerText = `${totalCount.innerText} jobs`;
 }
 calculateCount();
 
@@ -57,7 +66,7 @@ mainContainer.addEventListener('click', function (event) {
         parent.querySelector('.job-status').innerText = 'Interview';
         const mod = parent.querySelector('.job-status').parentNode;
         mod.classList.remove('bg-[#eef4ffFF]', 'text-red-600', 'font-bold', 'border', 'border-[#ef4444FF]', 'bg-green-100', 'bg-red-100');
-        mod.classList.add('text-green-600', 'font-bold', 'border', 'border-[#10b981FF]', 'bg-green-100');   
+        mod.classList.add('text-green-600', 'font-bold', 'border', 'border-[#10b981FF]', 'bg-green-100');
         parent.parentNode.classList.remove('border-l-5', 'border-l-red-500');
         parent.parentNode.classList.add('border-l-5', 'border-l-green-500');
         const cardInfo = {
@@ -115,10 +124,12 @@ mainContainer.addEventListener('click', function (event) {
         else if (currentStatus === 'rejected-btn') renderRejected();
         calculateCount();
     }
+
 })
 
 function renderInterview() {
     filterSection.innerHTML = '';
+    if (emptyPage(interviewList));
     for (let interview of interviewList) {
 
         let div = document.createElement('div');
@@ -151,6 +162,7 @@ function renderInterview() {
 
 function renderRejected() {
     filterSection.innerHTML = '';
+    if (emptyPage(rejectedList));
     for (let reject of rejectedList) {
 
         let div = document.createElement('div');
@@ -180,4 +192,13 @@ function renderRejected() {
         calculateCount();
     }
 }
-
+function emptyPage(array) {
+    if (array.length == 0) {
+        filterSection.innerHTML = `
+        <div class="flex flex-col items-center justify-center p-20 border-3 border-dashed border-gray-200 rounded-lg">
+        <i class="fa-regular fa-file-lines text-6xl text-blue-400 mb-4"></i>
+        <h3 class="text-xl font-bold text-gray-700">No jobs available</h3>
+        <p class="text-gray-500">Check back soon for new job opportunities</p>
+    </div>`;
+    }
+}
