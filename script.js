@@ -139,7 +139,7 @@ function renderInterview() {
     for (let interview of interviewList) {
 
         let div = document.createElement('div');
-        div.className = `card shadow flex justify-between p-7 rounded-md ${interview.headClasses}`;
+        div.className = `card shadow flex justify-between p-7 rounded-md transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${interview.headClasses}`;
         div.innerHTML = `
         <div class="card-left-content space-y-4">
                     <div class="card-head">
@@ -172,7 +172,7 @@ function renderRejected() {
     for (let reject of rejectedList) {
 
         let div = document.createElement('div');
-        div.className = `card shadow flex justify-between p-7 rounded-md ${reject.headClasses}`;
+        div.className = `card shadow flex justify-between p-7 rounded-md transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${reject.headClasses}`;
         div.innerHTML = `
         <div class="card-left-content space-y-4">
                     <div class="card-head">
