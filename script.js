@@ -124,12 +124,18 @@ mainContainer.addEventListener('click', function (event) {
         else if (currentStatus === 'rejected-btn') renderRejected();
         calculateCount();
     }
-
+    else if (event.target.classList.contains('btn-delete'))
+    {
+        event.target.closest('.card').remove();
+        calculateCount();
+    }
 })
+
+
 
 function renderInterview() {
     filterSection.innerHTML = '';
-    if (emptyPage(interviewList));
+    emptyPage(interviewList);
     for (let interview of interviewList) {
 
         let div = document.createElement('div');
@@ -153,7 +159,7 @@ function renderInterview() {
                     </div>
                 </div>
                 <div class="card-right-content">
-                    <button class="btn-delete shadow-md p-1 rounded-full text-gray-400 hover:text-red-500"><i class="fa-regular fa-trash-can"></i></button>
+                    <button" class="btn-delete-interview shadow-md p-1 rounded-full text-gray-400 hover:text-red-500"><i class="fa-regular fa-trash-can"></i></button>
                 </div>`;
         filterSection.appendChild(div);
         calculateCount();
@@ -162,7 +168,7 @@ function renderInterview() {
 
 function renderRejected() {
     filterSection.innerHTML = '';
-    if (emptyPage(rejectedList));
+    emptyPage(rejectedList);
     for (let reject of rejectedList) {
 
         let div = document.createElement('div');
@@ -186,7 +192,7 @@ function renderRejected() {
                     </div>
                 </div>
                 <div class="card-right-content">
-                    <button class="btn-delete shadow-md p-1 rounded-full text-gray-400 hover:text-red-500"><i class="fa-regular fa-trash-can"></i></button>
+                    <button " class="btn-delete-rejected shadow-md p-1 rounded-full text-gray-400 hover:text-red-500"><i class="fa-regular fa-trash-can"></i></button>
                 </div>`;
         filterSection.appendChild(div);
         calculateCount();
@@ -200,5 +206,14 @@ function emptyPage(array) {
         <h3 class="text-xl font-bold text-gray-700">No jobs available</h3>
         <p class="text-gray-500">Check back soon for new job opportunities</p>
     </div>`;
+    }
+}
+function deleteBtn(id) {
+    if (id == 'btn-delete-interview') {
+        console.log(id);
+        interviewList = interviewList.filter(item => item.jobTitle != cardInfo.jobTitle);
+    }
+    else if (id == 'btn-delete-rejected') {
+        rejectedList = rejectedList.filter(item => item.jobTitle != cardInfo.jobTitle);
     }
 }
